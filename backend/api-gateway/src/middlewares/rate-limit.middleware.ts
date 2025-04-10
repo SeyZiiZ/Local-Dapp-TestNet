@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 export class RateLimitMiddleware implements NestMiddleware {
   private limiter = rateLimit({
     windowMs: 60 * 1000,
-    max: 10,
+    max: 100,
     message: 'Trop de requêtes. Réessayez plus tard.',
     standardHeaders: true,
     legacyHeaders: false,

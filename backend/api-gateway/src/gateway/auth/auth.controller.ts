@@ -21,7 +21,7 @@ export class AuthController {
 
       try {
         const result = await this.authService.createUser(registerDto.email, registerDto.password);
-        return result
+        return result;
       } catch (err: any) {
         const status = err?.response?.status;
         const data = err?.response?.data;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoginForm from '../components/auths/LoginForm';
 import LoginHeader from '../components/auths/Header';
 import LoginLayout from '../components/auths/Layout';
@@ -6,14 +6,14 @@ import MiniFooter from '../components/MiniFooter';
 import { LoginFormData } from '../types/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../api/auth';
-import { useAuth } from '../stores/authStore';
+import { useUserStore } from '../stores/userStore';
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [generalSucces, setGeneralSucces] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { fetchUser } = useAuth();
+  const { fetchUser } = useUserStore();
 
   const handleLogin = async (formData: LoginFormData) => {
     setIsLoading(true);
@@ -31,13 +31,21 @@ export default function LoginPage() {
         setGeneralError("Login failed. Please check your details.");
         return;
       }
-
-      setGeneralSucces("Login successfully completed, you will be redirected ...");
       await fetchUser();
 
+      setGeneralSucces("Login successfully completed, you will be redirected ...");
+
+      const { isAdmin, isWhitelisted } = result.user;
+
       setTimeout(() => {
-        navigate('/home');
-      }, 3000);
+        if (isAdmin) {
+          navigate('/adminDashboard');
+        } else if (isWhitelisted) {
+          navigate('/home');
+        } else {
+          navigate('/whitelist');
+        }
+      }, 2000);
 
     } catch (error) {
       setGeneralError('Login failed. Please check your credentials and try again.');
@@ -45,6 +53,20 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+
+  /*
+  useEffect(() => {
+    if (userStore.isConnected && userStore.user?.isAdmin) {
+      navigate('/adminDashboard')
+    } else if (userStore.isConnected && userStore.user?.isWhitelisted && !userStore.user?.isAdmin) {
+      navigate('/home')
+    } else if (userStore.isConnected && !userStore.user?.isWhitelisted) {
+      navigate('whitelist')
+    } else {
+      return
+    }
+  }, [userStore.isConnected, userStore.user]);
+  */
 
   return (
     <LoginLayout>

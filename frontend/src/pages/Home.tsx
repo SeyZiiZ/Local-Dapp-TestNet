@@ -103,8 +103,8 @@ export default function Home() {
 
   async function getMe() {
     try {
-      const result = await UserService.testMe();
-      console.log("FRONT", result);
+      //const result = await UserService.testMe();
+      //console.log("FRONT", result);
     } catch (error: any) {
       console.log("Erreur", error);
     }

@@ -1,28 +1,32 @@
 import { useState } from "react";
-import axios from "axios";
 import ConnectWalletButton from "../components/wallet/ConnectWalletButton";
+import { UserService } from "../api/user";
 
 export default function WhitelistPage() {
     const [walletAddress, setWalletAddress] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [requestSended, setRequestSended] = useState<boolean>(false);
 
     const handleButtonWallet = (address: string) => {
+        setMessage("");
         setWalletAddress(address);
     }
 
     const requestWhitelist = async () => {
+        if (walletAddress.trim() === "") {
+            setMessage("No Wallet provided");
+            return;
+        }
         try {
-            /*
-              const response = await axios.post(
-                "http://localhost:3000/whitelist/request",
-                { walletAddress },
-                { withCredentials: true }
-              );
-            */
-            setMessage("✅ Request sent, you will be whitelisted in less than 24 hours");
-            console.log("Wallet : ", walletAddress);
+            const response = await UserService.addUserWallet(walletAddress);
+            if (!response.success) {
+                setMessage("Error Adding Your Wallet");
+            }
+            setRequestSended(!requestSended);
+            return setMessage("✅ Request sent, you will be whitelisted in less than 24 hours");
         } catch (err) {
             setMessage("❌ Request error");
+            console.log(err);
         }
     };
 
@@ -52,8 +56,13 @@ export default function WhitelistPage() {
                         {message}
                     </div>
                 )}
-
-                <button onClick={requestWhitelist}>Envoyé</button>
+                {!requestSended &&
+                <button
+                    onClick={requestWhitelist}
+                    className="mt-6 w-full bg-teal-700 hover:bg-teal-800 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md hover:shadow-lg cursor-pointer"
+                >
+                    Envoyer
+                </button>}
             </div>
         </div>
 

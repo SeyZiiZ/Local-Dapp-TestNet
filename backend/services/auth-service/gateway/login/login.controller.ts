@@ -23,7 +23,7 @@ export class LoginController {
         const result = await this.loginService.findUserToLogin(loginDto.email, loginDto.password);
         if (!result.success || !result.data) {
             return { success: false, error: result.error };
-          }
+        }
           
         const payload = {
             sub: result.data.id,
@@ -35,7 +35,7 @@ export class LoginController {
 
         return {
             success: true,
-            user: result.data.id,
+            user: result.data,
             token
         };
     }

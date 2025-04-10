@@ -1,18 +1,20 @@
 import { JSX, useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../stores/authStore';
+import { Navigate } from 'react-router-dom';
+import { useUserStore } from '../stores/userStore';
 
 interface ProtectedRouteProp {
   children: JSX.Element;
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProp) {
-  const { user, isLoading, fetchUser } = useAuth();
-  const location = useLocation();
+  const { user, isLoading, fetchUser } = useUserStore();
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if (!user) {
+      fetchUser();
+    }
+    console.log(user)
+  }, [user, fetchUser]);
 
   if (isLoading) {
     return (
@@ -26,17 +28,22 @@ export default function ProtectedRoute({ children }: ProtectedRouteProp) {
   }
 
   if (!user) return <Navigate to="/login" replace />;
-  
-  if (!user.isWhitelisted && location.pathname !== '/whitelist') {
-    return <Navigate to="/whitelist" replace />;
+  if (user.isAdmin) {
+    if (location.pathname !== '/adminDashboard') {
+      return <Navigate to="/adminDashboard" replace />;
+    }
   }
 
-  if (user.isAdmin && location.pathname !== '/adminDashboard') {
-    return <Navigate to="/adminDashboard" replace />;
+  if (!user.isAdmin && !user.isWhitelisted) {
+    if (location.pathname !== '/whitelist') {
+      return <Navigate to="/whitelist" replace />;
+    }
   }
 
-  if (user.isWhitelisted && !user.isAdmin && location.pathname !== '/home') {
-    return <Navigate to="/home" replace />;
+  if (!user.isAdmin && user.isWhitelisted) {
+    if (location.pathname !== '/home') {
+      return <Navigate to="/home" replace />;
+    }
   }
 
   return children;

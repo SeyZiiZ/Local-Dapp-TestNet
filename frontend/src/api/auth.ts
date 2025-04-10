@@ -18,7 +18,6 @@ export class AuthService {
                 passwordVerification
             });
 
-            console.log("Retour", response.data);
             return response.data;
         } catch (err: any) {
             console.error("Erreur lors de l'inscription :", err);
@@ -39,7 +38,6 @@ export class AuthService {
                 password,
             }, {withCredentials: true});
 
-            console.log("Retour", response.data);
             return response.data;
         } catch (err: any) {
             console.error("Erreur lors de l'inscription :", err);

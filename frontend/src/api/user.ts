@@ -3,15 +3,15 @@ import axios from "axios";
 const PORT = "http://localhost:3000";
 
 export class UserService {
-    static async testMe() {
+    static async addUserWallet(wallet: string) {
         try {
-            const result = await axios.get(`${PORT}/user/me`, {
-                withCredentials: true
-            });
-            console.log("API : ", result.data);
+            const result = await axios.put(`${PORT}/user/addUserWallet`, {
+                wallet
+            }, {withCredentials: true})
             return result.data;
-        } catch (error: any) {
-            console.log("Erreur", error);
+        } catch (error) {
+            console.log("Error", error);
+            throw new Error(`Error during the update : ${error}`)
         }
     }
 }

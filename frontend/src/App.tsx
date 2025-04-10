@@ -5,16 +5,10 @@ import Home from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import WhitelistPage from './pages/WhiteList';
+import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import { useAuth } from './stores/authStore';
-
 function App() {
-  const fetchUser = useAuth((state) => state.fetchUser);
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <Routes>
       <Route path='/' element={<LandingPage />} />
@@ -34,6 +28,15 @@ function App() {
             <Home />
           </ProtectedRoute>
         }
+        />
+        <Route path='adminDashboard'
+          element={
+            <ProtectedRoute>
+              <AdminDashboard error={undefined} success={undefined} totalUsers={undefined} totalWhitelisted={undefined} totalTransactions={undefined} whitelistRequests={undefined} approveWhitelist={undefined} rejectWhitelist={undefined} refreshData={function (): void {
+                throw new Error('Function not implemented.');
+              } } />
+            </ProtectedRoute>
+          }
         />
     </Routes>
   );

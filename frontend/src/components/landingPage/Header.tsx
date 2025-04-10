@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '../../stores/userStore';
 
 export default function Header() {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
+    const { isConnected } = useUserStore();
+
+    console.log(isConnected);
 
     const toggleMobileNav = () => {
         setMobileNavOpen(!mobileNavOpen);
@@ -50,8 +54,8 @@ export default function Header() {
                             <div className="hidden md:block">
                                 <Link 
                                 className="inline-flex group py-2.5 px-4 items-center justify-center text-sm font-medium text-white hover:text-teal-900 border border-white hover:bg-white rounded-full transition duration-200" 
-                                to={"/login"}>
-                                <span className="mr-2">Get Started</span>
+                                to={isConnected ? "/home" : "/login"}>
+                                <span className="mr-2">{isConnected ? 'Go to Wallet' : 'Get Started' }</span>
                                     <span className="transform group-hover:translate-x-0.5 transition-transform duration-200">
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M4.75 10H15.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
