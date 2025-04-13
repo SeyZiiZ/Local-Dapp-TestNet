@@ -8,54 +8,76 @@ import Logo from '../components/admin/Logo';
 import StatsPanel from '../components/admin/StatsPanel';
 import WhitelistTable from '../components/admin/WhitelistTable';
 import MiniFooter from '../components/MiniFooter';
+import { AdminService } from '../api/admin';
 
 interface AdminDashboardProps {
   errorProp: string | any;
   success: string | any;
-  approveWhitelist: (id: string) => void;
-  rejectWhitelist: (id: string) => void;
-  refreshData: () => void;
 }
 
 export default function AdminDashboard({
   errorProp,
   success,
-  approveWhitelist,
-  rejectWhitelist,
-  refreshData
 }: AdminDashboardProps) {
 
-  const { data, refetch } = useQuery(GET_ADMIN_STATS);
   const [liveRequests, setLiveRequests] = useState<any[]>([]);
-
-
+  const [staticRequests, setStaticRequests] = useState<any[]>([]);
+  
+  const { data, refetch } = useQuery(GET_ADMIN_STATS, {
+    onCompleted: (data) => {
+      setStaticRequests(data?.getAdminStats?.whitelistRequests || []);
+    },
+  });
+  
   const stats = data?.getAdminStats;
   const totalUsers = stats?.totalUsers ?? 0;
   const totalWhitelisted = stats?.totalWhitelisted ?? 0;
   const totalTransactions = stats?.totalTransactions ?? 0;
-  const whitelistRequests = stats?.whitelistRequests ?? [];
-
+  
   useEffect(() => {
     const socket = io('http://localhost:3000');
-
+  
     socket.on('connect', () => {
       console.log('✅ Connecté au WebSocket');
     });
-
+  
     socket.on('notification', (data) => {
       console.log('📩 Notification reçue:', data);
       toast.info(`🔔 ${data.title}`);
       if (data.details) {
-        setLiveRequests((prev) => [data.details, ...prev]);
+        const updatedId = data.details.id;
+
+        setLiveRequests((prev) => {
+          const filtered = prev.filter((r) => r.id !== updatedId);
+          return [data.details, ...filtered];
+        });
+    
+        setStaticRequests((prev) => prev.filter((r) => r.id !== updatedId));
       }
     });
-
+  
     return () => {
       socket.disconnect();
     };
   }, []);
+  
+  const decisionWhitelist = async (requestId: string, decision: string) => {
+    const response = await AdminService.decisionWhitelist(requestId, decision);
+    if (!response.success) {
+      alert("Error updating");
+    }
+  };
 
-  const allRequests = [...liveRequests, ...(whitelistRequests || [])];
+  const refreshData = () => {
+    window.location.reload();
+  }
+  
+  const allRequests = [
+    ...liveRequests,
+    ...staticRequests.filter(
+      (req) => !liveRequests.some((live) => live.id === req.id)
+    ),
+  ];
 
   return (
     <section className="relative bg-teal-900 min-h-screen flex flex-col items-center justify-center py-12 px-4">
@@ -93,8 +115,8 @@ export default function AdminDashboard({
 
           <WhitelistTable
             requests={allRequests}
-            approveWhitelist={approveWhitelist}
-            rejectWhitelist={rejectWhitelist}
+            approveWhitelist={decisionWhitelist}
+            rejectWhitelist={decisionWhitelist}
           />
 
           <div className="mt-6 text-center">

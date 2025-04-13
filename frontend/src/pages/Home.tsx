@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { ethers, BrowserProvider, formatEther, parseEther } from 'ethers';
 import Wallet from '../artifacts/contracts/Wallet.sol/Wallet.json';
 import { UserService } from '../api/user';
+import { hardhatLocalParams } from '../utils/networkParams';
 
-const walletAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+const walletAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export default function Home() {
   const [balance, setBalance] = useState<number | string>(0);
@@ -101,14 +102,21 @@ export default function Home() {
     getBalance();
   }, []);
 
-  async function getMe() {
+  const addNetwork = async () => {
     try {
-      //const result = await UserService.testMe();
-      //console.log("FRONT", result);
-    } catch (error: any) {
-      console.log("Erreur", error);
+      if (!window.ethereum) return alert("MetaMask n'est pas installé !");
+
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [hardhatLocalParams],
+      });
+      
+    } catch (error) {
+      console.error('❌ Erreur ajout réseau local :', error);
     }
   }
+
+
 
   return (
     <section className="relative bg-teal-900 min-h-screen flex flex-col items-center justify-center py-12 px-4">
@@ -217,9 +225,13 @@ export default function Home() {
             </div>
           </div>
 
+          <button onClick={addNetwork} className="px-4 py-2 bg-emerald-600 text-white rounded">
+            Ajouter le réseau local
+          </button>
+
           <div className="mt-8 text-center">
             <button
-              onClick={getMe}
+              onClick={() => window.location.reload()}
               className="text-sm font-medium text-teal-600 hover:text-teal-800"
             >
               Actualiser les informations

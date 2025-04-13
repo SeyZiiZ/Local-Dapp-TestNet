@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Put } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { AdminService } from './admin.service';
 
@@ -24,5 +24,10 @@ export class AdminController {
   @EventPattern('get-pending-whitelists')
   async getPendingWhitelists() {
     return await this.adminService.getPendingWhitelists();
+  }
+
+  @Put('decisionWhitelist')
+  async decisionWhitelist(@Body('id') id: string, @Body('decision') decision: string) {
+    return await this.adminService.decisionWhitelist(id, decision);
   }
 }

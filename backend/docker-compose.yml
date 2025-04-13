@@ -1,0 +1,66 @@
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  api-gateway:
+    build: ./api-gateway
+    env_file:
+      - ./.env
+    environment:
+      - PORT=3000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - AUTH_SERVICE_HOST=auth
+      - AUTH_SERVICE_PORT=3001
+      - USER_SERVICE_HOST=user
+      - USER_SERVICE_PORT=3002
+      - ADMIN_SERVICE_HOST=admin
+      - ADMIN_SERVICE_PORT=3003
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+      - user
+      - auth
+      - admin
+
+  auth:
+    build: ./services/auth-service
+    env_file:
+      - ./.env
+    environment:
+      - PORT=3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "3001:3001"
+    depends_on:
+      - redis
+
+  user:
+    build: ./services/user-service
+    env_file:
+      - ./.env
+    environment:
+      - PORT=3002
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "3002:3002"
+    depends_on:
+      - redis
+
+  admin:
+    build: ./services/admin-service
+    env_file:
+      - ./.env
+    environment:
+      - PORT=3003
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "3003:3003"
+    depends_on:
+      - redis

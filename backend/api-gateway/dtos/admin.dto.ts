@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { IsString, MinLength } from 'class-validator';
 
 @ObjectType()
 export class AdminStats {
@@ -28,4 +29,12 @@ export class WhitelistRequest {
 
   @Field()
   createdAt: string;
+}
+
+export class DecisionWhitelist {
+  @IsString()
+  id: string;
+
+  @IsString()
+  decision: string;
 }

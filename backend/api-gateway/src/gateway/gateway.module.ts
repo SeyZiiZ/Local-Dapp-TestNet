@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { NotificationsGateway } from './websocket/notifications.gateway';
 import { NotificationsController } from './websocket/notifications.controller';
-import { AdminStatsModule } from './admin/admin-stats.module';
+import { AdminStatsModule } from './admin/admin.module';
 
 @Module({
   imports: [

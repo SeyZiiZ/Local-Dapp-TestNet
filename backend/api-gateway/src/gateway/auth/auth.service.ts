@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
-const PORT = process.env.USER_SERVICE_PORT || 3001;
+const HOST = process.env.AUTH_SERVICE_HOST || 'localhost';
+const PORT = process.env.AUTH_SERVICE_PORT || '3001';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     async createUser(email: string, password: string) {
         try {
             const response = await firstValueFrom(
-                this.http.post(`http://localhost:${PORT}/register/user`, {
+                this.http.post(`http://${HOST}:${PORT}/register/user`, {
                     email,
                     password,
                 }),
@@ -31,7 +32,7 @@ export class AuthService {
     async loginUser(email: string, password: string) {
         try {
             const response = await firstValueFrom(
-                this.http.post(`http://localhost:${PORT}/login/emailLogin`, {
+                this.http.post(`http://${HOST}:${PORT}/login/emailLogin`, {
                     email,
                     password
                 }),

@@ -10,8 +10,8 @@ interface Request {
 
 interface WhitelistTableProps {
   requests: Request[];
-  approveWhitelist: (id: string) => void;
-  rejectWhitelist: (id: string) => void;
+  approveWhitelist: (id: string, decision: string) => void;
+  rejectWhitelist: (id: string, decision: string) => void;
 }
 
 export default function WhitelistTable({ requests, approveWhitelist, rejectWhitelist }: WhitelistTableProps) {
@@ -46,10 +46,10 @@ export default function WhitelistTable({ requests, approveWhitelist, rejectWhite
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span className={`px-2 py-1 rounded-full text-xs font-semibold 
-                      ${request.status === false || request.status === 'false' ? 'bg-yellow-100 text-yellow-800' : 
+                      ${request.status === false || request.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
                         request.status === 'true' || request.status === true ? 'bg-green-100 text-green-800' :
                         'bg-red-100 text-red-800'}`}>
-                      {request.status === false || request.status === "false" ? 'En attente' : 
+                      {request.status === false || request.status === "pending" ? 'En attente' : 
                         request.status === 'true' || request.status === true  ? 'Approuvé' : 'Rejeté'}
                     </span>
                   </td>
@@ -57,13 +57,13 @@ export default function WhitelistTable({ requests, approveWhitelist, rejectWhite
                     {(request.status === false || request.status === 'pending' || request.status === 'false') && (
                       <div className="flex space-x-2">
                         <button 
-                          onClick={() => approveWhitelist(request._id || request.id)}
+                          onClick={() => approveWhitelist(request._id || request.id, "accepted")}
                           className="px-3 py-1 bg-lime-500 text-teal-900 rounded-full hover:bg-lime-600 transition-colors duration-200 cursor-pointer"
                         >
                           Approve
                         </button>
                         <button 
-                          onClick={() => rejectWhitelist(request._id || request.id)}
+                          onClick={() => rejectWhitelist(request._id || request.id, "refused")}
                           className="px-3 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors duration-200 cursor-pointer"
                         >
                           Reject

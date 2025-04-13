@@ -1,11 +1,13 @@
 import { useState } from "react";
 import ConnectWalletButton from "../components/wallet/ConnectWalletButton";
 import { UserService } from "../api/user";
+import { useNavigate } from "react-router-dom";
 
 export default function WhitelistPage() {
     const [walletAddress, setWalletAddress] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [requestSended, setRequestSended] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const handleButtonWallet = (address: string) => {
         setMessage("");
@@ -23,7 +25,12 @@ export default function WhitelistPage() {
                 setMessage("Error Adding Your Wallet");
             }
             setRequestSended(!requestSended);
-            return setMessage("✅ Request sent, you will be whitelisted in less than 24 hours");
+
+            setMessage("✅ Request sent, you will be whitelisted in less than 24 hours, redirecting...");
+            setTimeout(() => {
+                navigate('/');
+            }, 2000)
+            return; 
         } catch (err) {
             setMessage("❌ Request error");
             console.log(err);

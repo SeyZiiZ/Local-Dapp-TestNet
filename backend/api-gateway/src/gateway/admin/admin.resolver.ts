@@ -1,5 +1,5 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { AdminStatsService } from './AdminStatService';
+import { AdminStatsService } from './admin.service';
 import { AdminStats } from 'dtos/admin.dto';
 
 @Resolver(() => AdminStats)

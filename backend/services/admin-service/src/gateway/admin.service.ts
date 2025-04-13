@@ -49,7 +49,7 @@ export class AdminService implements OnModuleInit {
 
   async getTotalWhitelistedUsers(): Promise<StandardFunctionReturn> {
     try {
-      const countPendingWhitelist = await this.pendingWhitelistModel.countDocuments();
+      const countPendingWhitelist = await this.pendingWhitelistModel.countDocuments({status: true});
       if (!countPendingWhitelist) {
         return { success: false }
       }
@@ -81,5 +81,48 @@ export class AdminService implements OnModuleInit {
       return { success: false, error: 'Mongo query failed' };
     }
   }
+
+  async decisionWhitelist(id: string, decision: string): Promise<StandardFunctionReturn> {
+    try {
+      const isApproved = decision === 'accepted';
+  
+      const whitelistEntry = await this.pendingWhitelistModel.findById(id).exec();
+  
+      if (!whitelistEntry) {
+        return {
+          success: false,
+          error: `No Whitelist found with id: ${id}`
+        };
+      }
+      const userId = whitelistEntry.userId;
+
+      const whitelistResult = await this.pendingWhitelistModel.updateOne(
+        { _id: id },
+        { $set: { status: isApproved } }
+      );
+  
+      const userResult = await this.userModel.updateOne(
+        { _id: userId },
+        { $set: { isWhitelisted: isApproved } }
+      );
+  
+      if (whitelistResult.modifiedCount === 0 && userResult.modifiedCount === 0) {
+        return {
+          success: false,
+          error: 'No update made'
+        };
+      }
+  
+      return { success: true };
+  
+    } catch (error) {
+      console.error('❌ Erreur dans decisionWhitelist :', error);
+      return {
+        success: false,
+        error: 'MongoDB query failed.'
+      };
+    }
+  }
+  
 
 }

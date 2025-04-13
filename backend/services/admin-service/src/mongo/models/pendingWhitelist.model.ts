@@ -14,8 +14,8 @@ export class PendingWhitelist {
     @Prop({ required: true, default: Date.now() })
     createdAt: Date;
 
-    @Prop({ required: true, default: false })
-    status: boolean;
+    @Prop({ required: true })
+    status: string;
 }
 
 export const PendingWhitelistSchema = SchemaFactory.createForClass(PendingWhitelist);
