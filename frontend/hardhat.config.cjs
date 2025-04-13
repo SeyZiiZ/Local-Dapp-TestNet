@@ -8,7 +8,11 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      chainId: 1337
+      chainId: 1337,
+    },
+    localhost: {
+      url: "http://blockchain:8545",
+      chainId: 1337,
     }
   }
 };

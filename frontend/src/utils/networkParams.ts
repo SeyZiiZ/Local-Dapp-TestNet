@@ -6,5 +6,5 @@ export const hardhatLocalParams = {
         symbol: 'ETH',
         decimals: 18,
     },
-    rpcUrls: ['http://127.0.0.1:8545'],
+    rpcUrls: ['http://host.docker.internal:8545'],
 };

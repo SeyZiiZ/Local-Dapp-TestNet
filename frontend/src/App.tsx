@@ -32,9 +32,7 @@ function App() {
         <Route path='adminDashboard'
           element={
             <ProtectedRoute>
-              <AdminDashboard error={undefined} success={undefined} totalUsers={undefined} totalWhitelisted={undefined} totalTransactions={undefined} whitelistRequests={undefined} approveWhitelist={undefined} rejectWhitelist={undefined} refreshData={function (): void {
-                throw new Error('Function not implemented.');
-              } } />
+              <AdminDashboard  success={undefined} errorProp={undefined}/>
             </ProtectedRoute>
           }
         />
