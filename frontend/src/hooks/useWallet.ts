@@ -4,6 +4,7 @@ import Wallet from '../artifacts/contracts/Wallet.sol/Wallet.json';
 import { hardhatLocalParams } from '../utils/networkParams';
 import address from '../utils/contractAddress.json';
 import { sendFaucet } from '../utils/sendFaucet';
+import Swal from 'sweetalert2';
 
 const walletAddress = address.walletAddress;
 
@@ -89,11 +90,22 @@ export function useWallet() {
 
   const handleFaucetClick = async () => {
     try {
-      const txHash = await sendFaucet(userAddress);
-      console.log("ETH envoyé ! Hash :", txHash);
-      console.log("ETH envoyé address : ", userAddress);
-    } catch (err) {
+      await sendFaucet(userAddress);
+      Swal.fire({
+        icon: 'success',
+        title: 'ETH envoyé !',
+        text: `You'll be receiving your ETH faucets any second now.`,
+        confirmButtonText: 'OK',
+      });
+    } catch (err: any) {
       console.error("Erreur faucet :", err);
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors de l\'envoi',
+        text: err.message || 'Quelque chose s\'est mal passé.',
+        confirmButtonText: 'OK',
+      });
     }
   };
 

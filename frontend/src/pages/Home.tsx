@@ -47,8 +47,8 @@ export default function Home() {
         <div className="flex-1">
           <div className="bg-white rounded-2xl shadow-xl p-8 h-full">
             <div className="text-center mb-8">
-              <h2 className="text-3xl text-teal-900 font-semibold mb-2">Web3 Wallet</h2>
-              <p className="text-gray-600">Gérez vos ETH en toute simplicité</p>
+              <h2 className="text-3xl text-teal-900 font-semibold mb-2">Flora&Fauna Wallet</h2>
+              <p className="text-gray-600">Manage your ETH with ease</p>
             </div>
 
             <StatusMessage error={error} success={success} />
@@ -73,7 +73,7 @@ export default function Home() {
                 onClick={() => window.location.reload()}
                 className="text-sm font-medium text-teal-600 hover:text-teal-800 cursor-pointer"
               >
-                Actualiser les informations
+                Refresh information
               </button>
             </div>
           </div>
@@ -83,8 +83,8 @@ export default function Home() {
         <div className="flex-1">
           <div className="bg-white rounded-2xl shadow-xl p-8 h-full">
             <div className="text-center mb-8">
-              <h2 className="text-3xl text-teal-900 font-semibold mb-2">Utilitaires</h2>
-              <p className="text-gray-600">Outils et assistance</p>
+              <h2 className="text-3xl text-teal-900 font-semibold mb-2">Utilities</h2>
+              <p className="text-gray-600">Tools and support</p>
             </div>
 
             <ActionButtons
@@ -93,20 +93,20 @@ export default function Home() {
             />
 
             <div className="mt-8 border rounded-lg p-4">
-              <h3 className="text-lg font-medium text-gray-700 mb-4">Assistant Web3</h3>
+              <h3 className="text-lg font-medium text-gray-700 mb-4">Web3 Intelligent Assistant</h3>
               <div className="bg-gray-50 p-4 rounded-lg mb-4 h-64 overflow-y-auto">
                 <div className="bg-teal-100 p-3 rounded-lg mb-2">
-                  Comment puis-je vous aider avec votre portefeuille Web3 ?
+                  How can I help you with your Web3 portfolio?
                 </div>
               </div>
               <div className="flex">
                 <input
                   type="text"
-                  placeholder="Posez une question..."
+                  placeholder="Ask a question..."
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
                 />
                 <button className="px-4 py-2 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700 cursor-pointer">
-                  Envoyer
+                  Send
                 </button>
               </div>
             </div>

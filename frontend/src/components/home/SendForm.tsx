@@ -11,7 +11,7 @@ export default function SendForm({ amountSend, onChange, onSend }: SendFormProps
                 <svg className="h-5 w-5 mr-2 text-teal-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd" />
                 </svg>
-                Envoyer des ETH
+                Add ETH
             </h3>
             <div className="relative mb-3">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -33,7 +33,7 @@ export default function SendForm({ amountSend, onChange, onSend }: SendFormProps
                 onClick={onSend}
                 className="w-full py-3 px-4 flex justify-center items-center text-lg font-medium text-teal-900 bg-lime-500 hover:bg-lime-600 border border-lime-500 rounded-full transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500 cursor-pointer"
             >
-                Envoyer
+                Add
             </button>
         </div>
     )
