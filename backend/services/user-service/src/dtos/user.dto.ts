@@ -23,3 +23,10 @@ export class StandardFunctionReturn {
     }
     error?: string;
 }
+
+export class StandardFunctionReturnAI {
+    success: boolean;
+    data?: {
+        response: string;
+    }
+}

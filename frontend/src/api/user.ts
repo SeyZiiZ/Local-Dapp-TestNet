@@ -14,4 +14,16 @@ export class UserService {
             throw new Error(`Error during the update : ${error}`)
         }
     }
+
+    static async askChatBot(message: string) {
+        try {
+            const result = await axios.post(`${PORT}/user/chatBot`, {
+                message
+            }, {withCredentials: true})
+            return result.data;
+        } catch (error) {
+            console.log("Error", error);
+            throw new Error(`Error communicating with chatbot : ${error}`)
+        }
+    }
 }

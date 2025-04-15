@@ -24,6 +24,21 @@ export class UserService {
         }
     }
 
+    async getChatResponse(message: string) {
+        try {
+            const response = await firstValueFrom(
+                this.http.post(`http://${HOST}:${PORT}/user/aiResponse`, {
+                    message
+                })
+            )
+            console.log("Reponse GATEWAY :", response.data);
+            return response.data;
+        } catch (error) {
+            console.log("Error : ", error);
+            throw new Error(`Error : ${error}`);
+        }
+    }
+
     async test(): Promise<any> {
         try {
             const response = await firstValueFrom(

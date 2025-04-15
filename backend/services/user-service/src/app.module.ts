@@ -7,12 +7,14 @@ import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './mongo/models/user.model';
 import { PendingWhitelist, PendingWhitelistSchema } from './mongo/models/pendingWhitelist.model';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
     ConfigModule,
     MongoDbModule,
     HttpModule,
+    OpenaiModule,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: PendingWhitelist.name, schema: PendingWhitelistSchema }

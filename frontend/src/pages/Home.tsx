@@ -6,6 +6,7 @@ import SendForm from '../components/home/SendForm';
 import WithdrawForm from '../components/home/WithdrawForm';
 import ActionButtons from '../components/home/ActionButtons';
 import StatusMessage from '../components/home/StatusMessage';
+import ChatBot from '../components/home/ChatBot';
 import MiniFooter from '../components/MiniFooter';
 
 export default function Home() {
@@ -92,24 +93,8 @@ export default function Home() {
               onFaucet={handleFaucetClick}
             />
 
-            <div className="mt-8 border rounded-lg p-4">
-              <h3 className="text-lg font-medium text-gray-700 mb-4">Web3 Intelligent Assistant</h3>
-              <div className="bg-gray-50 p-4 rounded-lg mb-4 h-64 overflow-y-auto">
-                <div className="bg-teal-100 p-3 rounded-lg mb-2">
-                  How can I help you with your Web3 portfolio?
-                </div>
-              </div>
-              <div className="flex">
-                <input
-                  type="text"
-                  placeholder="Ask a question..."
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
-                />
-                <button className="px-4 py-2 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700 cursor-pointer">
-                  Send
-                </button>
-              </div>
-            </div>
+            <ChatBot />
+
           </div>
         </div>
       </div>

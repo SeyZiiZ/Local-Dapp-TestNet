@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UpdateWalletDto } from './dtos/user.dto';
 
@@ -14,5 +14,10 @@ export class AppController {
     }
 
     return { success: true }
+  }
+
+  @Post('aiResponse')
+  async getAiReply(@Body('message') message: string) {
+    return this.appService.getAiReply(message);
   }
 }
