@@ -26,4 +26,17 @@ export class UserService {
             throw new Error(`Error communicating with chatbot : ${error}`)
         }
     }
+
+    static async addNewsletter(email: string) {
+        try {
+            const result = await axios.post(`${PORT}/user/newsletter`, {
+                email
+            })
+            console.log(result.data)
+            return result.data;
+        } catch (error) {
+            console.log("Error", error);
+            throw new Error(`Error communicating with chatbot : ${error}`)
+        }
+    }
 }

@@ -20,4 +20,9 @@ export class AppController {
   async getAiReply(@Body('message') message: string) {
     return this.appService.getAiReply(message);
   }
+
+  @Post('newsletter')
+  async addEmailNewsletter(@Body('email') email: string) {
+    return this.appService.addEmailNewsletter(email);
+  }
 }

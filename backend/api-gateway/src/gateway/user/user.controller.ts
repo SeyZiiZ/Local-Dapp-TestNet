@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Req, Post, Put, Request, UseGuards, InternalServerErrorException } from '@nestjs/common';
+import { Body, Controller, Get, Param, Req, Post, Put, Request, UseGuards, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { ChatBotDto } from 'dtos/user.dto';
+import { ChatBotDto, EmailNewsletterDto } from 'dtos/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -41,6 +41,20 @@ export class UserController {
         } catch (error: any) {
             console.log("Error : ", error);
             throw new InternalServerErrorException("Error getting response");
+        }
+    }
+
+    @Post('newsletter')
+    async addEmailNewsletter(@Body() emailNewsletterDto: EmailNewsletterDto) {
+        try {
+            const result = await this.userService.addEmailNewsletter(emailNewsletterDto.email);
+            if (!result.success) {
+                throw new BadRequestException(result.error || "Error adding email to newsletter");
+            }
+            return {success: true}
+        } catch (error) {
+            console.log("Error : ", error);
+            throw new InternalServerErrorException("Error adding email newsletter");
         }
     }
 

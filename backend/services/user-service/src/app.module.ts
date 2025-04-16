@@ -7,6 +7,7 @@ import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './mongo/models/user.model';
 import { PendingWhitelist, PendingWhitelistSchema } from './mongo/models/pendingWhitelist.model';
+import { Newsletter, NewsletterSchema } from './mongo/models/newsletter.model';
 import { OpenaiModule } from './openai/openai.module';
 
 @Module({
@@ -17,7 +18,8 @@ import { OpenaiModule } from './openai/openai.module';
     OpenaiModule,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: PendingWhitelist.name, schema: PendingWhitelistSchema }
+      { name: PendingWhitelist.name, schema: PendingWhitelistSchema },
+      { name: Newsletter.name, schema: NewsletterSchema }
     ]),
     ConfigModule.forRoot({
       isGlobal: true

@@ -1,4 +1,22 @@
-export default function Footer() {
+import { useState } from "react";
+
+interface FooterProps {
+    onSubmitEmail: (email: string) => void;
+  }
+
+export default function Footer({ onSubmitEmail }: FooterProps) {
+    const [email, setEmail] = useState("");
+    
+
+    
+  const handleSubmit = () => {
+    if (email.trim()) {
+      onSubmitEmail(email);
+      setEmail("");
+    }
+  };
+
+
     return (
         <section className="relative py-12 lg:py-24 bg-orange-50 overflow-hidden"><img className="absolute bottom-0 left-0" src="fauna-assets/footer/waves-lines-left-bottom.png" alt="" />
             <div className="container px-4 mx-auto relative">
@@ -35,10 +53,22 @@ export default function Footer() {
                     </div>
                     <div className="w-full md:w-5/12 lg:w-4/12 px-4">
                         <div className="max-w-sm p-8 bg-teal-900 rounded-2xl mx-auto md:mr-0">
-                            <h5 className="text-xl font-medium text-white mb-4">Your Source for Green Energy Updates</h5>
-                            <p className="text-sm text-white opacity-80 leading-normal mb-10">Stay in the loop with our Green Horizon newsletter, where we deliver bite-sized insights into the latest green energy solutions.</p>
+                            <h5 className="text-xl font-medium text-white mb-4">Your Source for decentralized Updates</h5>
+                            <p className="text-sm text-white opacity-80 leading-normal mb-10">Stay in the loop with our newsletter, where we deliver bite-sized insights into the latest DeFi solutions.</p>
                             <div className="flex flex-col">
-                                <input className="h-12 w-full px-4 py-1 placeholder-gray-700 outline-none ring-offset-0 focus:ring-2 focus:ring-lime-500 shadow rounded-full" type="email" placeholder="Your e-mail..." /><a className="h-12 inline-flex mt-3 py-1 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white rounded-full transition duration-200" href="#">Get in touch</a>
+                                <input
+                                    className="h-12 w-full px-4 py-1 placeholder-white text-white border border-black outline-none focus:ring-2 focus:ring-black shadow rounded-full"
+                                    type="email"
+                                    placeholder="Your e-mail..."
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <button
+                                onClick={handleSubmit}
+                                className="h-12 inline-flex mt-3 py-1 px-5 items-center justify-center font-medium text-teal-900 border border-lime-500 hover:border-white bg-lime-500 hover:bg-white rounded-full transition duration-200 cursor-pointer"
+                                >
+                                Get in touch
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -56,7 +86,7 @@ export default function Footer() {
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19 3C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19ZM18.5 18.5V13.2C18.5 12.3354 18.1565 11.5062 17.5452 10.8948C16.9338 10.2835 16.1046 9.94 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17C14.6813 12.17 15.0374 12.3175 15.2999 12.5801C15.5625 12.8426 15.71 13.1987 15.71 13.57V18.5H18.5ZM6.88 8.56C7.32556 8.56 7.75288 8.383 8.06794 8.06794C8.383 7.75288 8.56 7.32556 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19C6.43178 5.19 6.00193 5.36805 5.68499 5.68499C5.36805 6.00193 5.19 6.43178 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56ZM8.27 18.5V10.13H5.5V18.5H8.27Z" fill="currentColor"></path>
                             </svg></a></div>
-                    <p className="text-sm text-gray-500 mb-3">© 2025 Flora&Fauna. All rights reserved.</p>
+                    <p className="text-sm text-gray-500 mb-3">Â© 2025 Flora&Fauna. All rights reserved.</p>
                 </div>
             </div>
         </section>
