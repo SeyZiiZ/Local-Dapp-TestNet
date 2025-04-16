@@ -24,12 +24,21 @@ Local-Dapp-TestNet is a lightweight decentralized application built with Solidit
 
 - `backend/` : Feature integration
 - `frontend/` : User interface for interacting with contracts.
+- `frontend/contracts` : Smart Contracts.
 - `.gitignore` : Files and folders to be ignored by Git.
 - `README.MD`: Project documentation.
 
 ## 🛠️ Installation and use
 
-### Docker: 
+### ENVIRONMENT VARIABLES : 
+#### Create a .env at the racine of the backend folder (./backend) and put your own informations
+```bash
+MONGOURI=""
+JWT_SECRET=""
+OPENAI_KEY=""
+```
+
+### Docker : 
 #### Run the following command on both folders
 
 ```bash
@@ -41,5 +50,5 @@ docker-compose up --build
 npm run dev
 ```
 
-# Warning !
+# ⚠ Warning ! ⚠
 ## Smart contracts have been placed in the front end folder for development ease. Put it in the backend folder for real deployment and security
