@@ -19,6 +19,7 @@ Local-Dapp-TestNet is a lightweight decentralized application built with Solidit
 - **MetaMask** : Ethereum wallet for interacting with DApps.
 - **ReactJS** : Framework for user interface development.
 - **NestJS** : Framework for backend development
+- **MongoDB** : NoSQL Database
 
 ## 📂 Project structure
 
